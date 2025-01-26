@@ -21,7 +21,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Restore dependencies
-        run: nuget restore WinCompose.sln
+        run: nuget restore src/WinCompose.sln
 
       - name: Build project
         run: msbuild src/WinCompose.sln /p:Configuration=Release
