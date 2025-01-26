@@ -1,16 +1,36 @@
-- task: NuGetToolInstaller@1
-  displayName: 'Install NuGet'
-  inputs:
-    versionSpec: '5.x'
+name: Build WinCompose
 
-- task: NuGetCommand@2
-  displayName: 'Restore NuGet Packages'
-  inputs:
-    command: 'restore'
-    restoreSolution: 'src\wincompose.sln'
-    feedsToUse: 'select'
-    vstsFeed: 'your-feed-id'
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
-- script: |
-    nuget locals all -clear
-  displayName: 'Clear NuGet Cache'
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Set up CMake
+        uses: actions/setup-cmake@v3
+
+      - name: Configure CMake
+        run: cmake -Bbuild -H.
+
+      - name: Build project
+        run: cmake --build build --config Release
+
+      - name: Run tests
+        run: ctest --test-dir build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: wincompose-build
+          path: build/
