@@ -18,7 +18,7 @@ jobs:
           submodules: 'true'
 
       - name: Set up CMake
-        uses: StayanDimitrov/cmake-action@v2.1.0
+        uses: jwlawson/actions-setup-cmake@v2
 
       - name: Configure CMake
         run: cmake -Bbuild -H.
