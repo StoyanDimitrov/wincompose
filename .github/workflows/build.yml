@@ -16,14 +16,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install CMake
-      run: |
-        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-
     - name: Set up Visual Studio
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Build the project
       run: |
-        cmake -S . -B build
-        cmake --build build --config Release
+        msbuild src\wincompose.sln /p:Configuration=Release
