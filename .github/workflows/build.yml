@@ -21,7 +21,7 @@ jobs:
         uses: jwlawson/actions-setup-cmake@v2
 
       - name: Configure CMake
-        run: cmake -Bbuild -H.
+        run: cmake -S . -B build
 
       - name: Build project
         run: cmake --build build --config Release
