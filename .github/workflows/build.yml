@@ -24,7 +24,7 @@ jobs:
         run: nuget restore WinCompose.sln
 
       - name: Build project
-        run: msbuild WinCompose.sln /p:Configuration=Release
+        run: msbuild src/WinCompose.sln /p:Configuration=Release
 
       - name: Run tests
         run: |
