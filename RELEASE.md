@@ -33,4 +33,3 @@ The queried URL is http://wincompose.info/status.txt
 
  * [Portable Freeware](http://www.portablefreeware.com/?id=2615) (updates need to be requested [in the forums](http://www.portablefreeware.com/forums/viewforum.php?f=8))
  * [Softpedia](http://www.softpedia.com/get/System/OS-Enhancements/WinCompose.shtml) (there is a “send us an update” button)
-
