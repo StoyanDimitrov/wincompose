@@ -36,3 +36,4 @@ jobs:
       with:
         name: wincompose-build
         path: build/bin/Release
+
