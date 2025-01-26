@@ -1,28 +1,16 @@
-name: Build WinCompose
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet'
+  inputs:
+    versionSpec: '5.x'
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+- task: NuGetCommand@2
+  displayName: 'Restore NuGet Packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: 'src\wincompose.sln'
+    feedsToUse: 'select'
+    vstsFeed: 'your-feed-id'
 
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout repository with submodules
-      uses: actions/checkout@v2
-      with:
-        submodules: 'true'
-
-    - name: Set up Visual Studio
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: Restore NuGet packages
-      run: nuget restore src\wincompose.sln
-
-    - name: Build the project
-      run: msbuild src\wincompose.sln /p:Configuration=Release
+- script: |
+    nuget locals all -clear
+  displayName: 'Clear NuGet Cache'
