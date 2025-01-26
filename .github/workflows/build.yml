@@ -1,0 +1,38 @@
+name: Build WinCompose
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: actions/setup-cmake@v2
+      with:
+        cmake-version: '3.21'  # You can use a version compatible with the project
+
+    - name: Set up Visual Studio
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        vs-version: 'latest'  # You can specify a version if needed
+
+    - name: Build the project
+      run: |
+        cmake -S . -B build
+        cmake --build build --config Release
+      
+    - name: Upload Build Artifacts (Optional)
+      uses: actions/upload-artifact@v2
+      with:
+        name: wincompose-build
+        path: build/bin/Release
