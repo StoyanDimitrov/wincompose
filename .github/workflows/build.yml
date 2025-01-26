@@ -1,4 +1,4 @@
-name: Build WinCompose
+name: Build and Deploy WinCompose
 
 on:
   push:
@@ -11,28 +11,33 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: 'true'
-          fetch-depth: 0
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Set up Visual Studio
-        uses: microsoft/setup-msbuild@v1
-
-      - name: Restore dependencies
-        run: nuget restore src/wincompose.sln
-
-      - name: Build project
-        run: msbuild src/wincompose.sln /p:Configuration=Release
-
-      - name: Run tests
+      - name: Install .NET Framework 4.0 Developer Pack
+        shell: powershell
         run: |
-          # Add test command if needed
+          Invoke-WebRequest -Uri "https://aka.ms/msbuild/developerpacks" -OutFile "dotnet-framework-4.0-developer-pack.exe"
+          Start-Process -FilePath "dotnet-framework-4.0-developer-pack.exe" -ArgumentList "/quiet /norestart" -Wait
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: wincompose-build
-          path: ./bin/Release
+      - name: Restore NuGet Packages
+        run: nuget restore src/WinCompose.sln
+
+      - name: Build WinCompose
+        run: msbuild src/WinCompose.sln /p:Configuration=Release
+
+      - name: Run Tests
+        run: |
+          cd src
+          & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" tests\wincompose-tests.csproj /p:Configuration=Release
+
+      - name: Create Installer
+        run: |
+          cd src
+          msbuild src/installer/installer-helper.vcxproj /p:Configuration=Release
+          
+      - name: Deploy
+        run: |
+          # Deployment steps here
