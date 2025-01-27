@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - name: Checkout code with submodules
@@ -21,11 +21,6 @@ jobs:
 
       - name: Set up Visual Studio
         uses: microsoft/setup-msbuild@v1
-
-      - name: Install .NET Framework 4.0 Developer Pack
-        run: |
-          Invoke-WebRequest -Uri "https://aka.ms/msbuild/developerpacks" -OutFile "dotnet-framework-4.0-developer-pack.exe"
-          Start-Process -FilePath "dotnet-framework-4.0-developer-pack.exe" -ArgumentList "/quiet /norestart" -Wait
 
       - name: Restore dependencies
         run: nuget restore src/wincompose.sln
