@@ -37,6 +37,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Category.be-BY.resx</DependentUpon>
     </Compile>
+    <Compile Update="unicode\Category.bg.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Category.bg.resx</DependentUpon>
+    </Compile>
     <Compile Update="unicode\Category.ca.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -351,6 +356,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Text.be-BY.resx</DependentUpon>
+    </Compile>
+    <Compile Update="i18n\Text.bg.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Text.bg.resx</DependentUpon>
     </Compile>
     <Compile Update="i18n\Text.ca.Designer.cs">
       <AutoGen>True</AutoGen>
